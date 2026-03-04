@@ -21,11 +21,9 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { DocumentTag } from "@/src/lib/types/file-upload";
-import {
-  useFileUploadForm,
-  DOCUMENT_TAGS,
-  MAX_FILES,
-} from "@/src/hooks/useFileUploadForm.hook";
+import { useFileUploadForm } from "@/src/presentation/hooks/useFileUploadForm.hook";
+import { MAX_FILES } from "@/src/lib/constants/drag-drop-restrictions.constante";
+import { DOCUMENT_TAGS } from "@/src/lib/constants/document-tags.constant";
 
 export default function FileUploadForm() {
   const {
@@ -55,7 +53,16 @@ export default function FileUploadForm() {
             <h1 className="text-2xl font-semibold">File Upload</h1>
 
             <div
-              className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors ${
+              role="button"
+              tabIndex={0}
+              onClick={() => fileInputRef.current?.click()}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  fileInputRef.current?.click();
+                }
+              }}
+              className={`border-2 border-dashed rounded-lg p-12 text-center transition-colors cursor-pointer ${
                 dragActive
                   ? "border-primary bg-primary/5"
                   : "border-gray-300 hover:border-gray-400"
@@ -86,7 +93,10 @@ export default function FileUploadForm() {
                     Drag and drop your files here or{" "}
                     <button
                       type="button"
-                      onClick={() => fileInputRef.current?.click()}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        fileInputRef.current?.click();
+                      }}
                       className="text-primary hover:underline"
                     >
                       click to select them

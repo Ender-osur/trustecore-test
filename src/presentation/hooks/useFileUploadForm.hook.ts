@@ -8,18 +8,12 @@ import type {
   FileUploadItem,
   UploadStatus,
 } from "@/src/lib/types/file-upload";
+import { DOCUMENT_TAGS as DOCUMENT_TAGS_CONSTANT } from "@/src/lib/constants/document-tags.constant";
+import { MAX_FILES, MAX_TOTAL_SIZE } from "@/src/lib/constants/drag-drop-restrictions.constante";
 
-export const DOCUMENT_TAGS: DocumentTag[] = [
-  "cédula de ciudadanía",
-  "registro civil",
-  "tarjeta de identidad",
-  "cédula de extranjería",
-  "pasaporte",
-  "pasaporte de extranjería",
-];
 
-export const MAX_FILES = 5;
-export const MAX_TOTAL_SIZE = 5 * 1024 * 1024;
+export const DOCUMENT_TAGS: DocumentTag[] = DOCUMENT_TAGS_CONSTANT;
+
 
 type SetFieldValue = FormikHelpers<FileUploadFormValues>["setFieldValue"];
 
